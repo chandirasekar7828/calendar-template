@@ -65,4 +65,22 @@ export class CalendarViewComponent {
     return this._calendar.columnDivider()
   }
 
+  eventStyle() {
+    let leftSpace = 1
+
+    let eventDateDifference = 2
+
+    let topSpace = 0
+
+    return {
+      left : (14.29 * leftSpace) + '%',
+      width : (14.29 * eventDateDifference) + '%',
+      top: (0 + topSpace) + 'em',
+      borderColor: "rgb(3, 155, 229)"
+    }
+  }
+
 }
+
+
+// left: 14.29%; width: 14.29%; top: 0em; border-color: rgb(3, 155, 229);
