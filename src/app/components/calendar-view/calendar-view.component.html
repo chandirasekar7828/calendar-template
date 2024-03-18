@@ -45,7 +45,7 @@
                             <div class="event-list">
                                 <ng-container *ngFor="let event of getEventsByDay(monthDates[rowIndex * columnDivider().length + colIndex]);">
                                     <div class="eve"
-                                        [style]="eventStyle()">
+                                        [style]="eventStyle(colIndex, getEventsByDay(monthDates[rowIndex * columnDivider().length + colIndex]).length ,event)">
                                         <div role="button" class="eve-btn" [style.backgroundColor]="event.background_color">
                                             <span aria-hidden="true" class="eve-text">
                                                 <span class="">{{ event.description }} </span>

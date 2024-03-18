@@ -51,7 +51,7 @@ export class CalendarViewComponent {
   // events
 
   getEventsByDay(monthDate: monthDate){
-    console.log(this._calendar.getEventsByDay(monthDate));
+    // console.log(this._calendar.getEventsByDay(monthDate));
     
     return this._calendar.getEventsByDay(monthDate); 
   }
@@ -65,19 +65,38 @@ export class CalendarViewComponent {
     return this._calendar.columnDivider()
   }
 
-  eventStyle() {
-    let leftSpace = 1
+  eventStyle(colIndex: number, eventCount: number ,event : event) {
 
-    let eventDateDifference = 2
+    // console.log(colIndex);
+    
+
+    let leftSpace = Math.abs(colIndex - 7)
+
+    let startDate = event.start_date 
+    let endDate = event.end_date 
+
+    
+    let eventDateDifference = this.calculateDateDifference(startDate, endDate)
+
 
     let topSpace = 0
 
     return {
       left : (14.29 * leftSpace) + '%',
       width : (14.29 * eventDateDifference) + '%',
-      top: (0 + topSpace) + 'em',
-      borderColor: "rgb(3, 155, 229)"
+      top: (0 + topSpace) + 'em'
     }
+  }
+
+
+  calculateDateDifference(date1String: Date, date2String: Date): number {
+    
+    const date1 = new Date(date1String);
+    const date2 = new Date(date2String);
+    const differenceMs = Math.abs(date2.getTime() - date1.getTime());
+    const differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
+
+    return differenceDays;
   }
 
 }
