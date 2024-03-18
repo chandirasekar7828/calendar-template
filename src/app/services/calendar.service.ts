@@ -187,6 +187,29 @@ export class CalendarService {
     return events;
   }
 
+
+  getEventsByDay(monthDate: monthDate){
+    // console.log(monthDate);
+    
+    let day = monthDate.date;
+    let filteredEvents: event[] = [];
+    let hasEvents = false;
+
+    this.events.forEach((event) => {
+      let eventStartDate = new Date(event.start_date);
+      let eventEndDate = new Date(event.end_date);
+
+      if (day >= eventStartDate && day <= eventEndDate) {
+        filteredEvents.push(event);
+        hasEvents = true;
+      } 
+    });
+    
+    // console.log(filteredEvents);
+    monthDate.hasEvent = hasEvents;
+    return filteredEvents;
+  }
+
   // utils functions
   createDateFromDMY(dateString: any): Date {
     let _parts = dateString.split('-');

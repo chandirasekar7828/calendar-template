@@ -36,9 +36,37 @@
             </div>
             <div class="event-row">
                 <div class="event--row" style="height: 3.75em;">
-                    <div role="gridcell" class="event-gridcell" *ngFor="let columnCount of columnDivider(); let colIndex = index">
-                        <ng-container *ngIf="getEventsByDay(monthDates[rowIndex * columnDivider().length + colIndex]).length > 0">
-                            <h2 class="event-title">{{ monthDates[rowIndex * columnDivider().length + colIndex].date }}</h2>
+
+                    <div role="gridcell" class="event-gridcell"
+                        *ngFor="let columnCount of columnDivider(); let colIndex = index">
+                        <h2 class="event-title">{{ monthDates[rowIndex * columnDivider().length + colIndex].date }}</h2>
+                        <ng-container
+                            *ngIf="getEventsByDay(monthDates[rowIndex * columnDivider().length + colIndex]).length > 0">
+                            <div class="event-list">
+                                <ng-container *ngFor="let event of getEventsByDay(monthDates[rowIndex * columnDivider().length + colIndex]);">
+                                    <div class="eve"
+                                        style="left: 14.29%; width: 14.29%; top: 0em; border-color: rgb(3, 155, 229);">
+                                        <div role="button" class="eve-btn" style="background-color: rgb(3, 155, 229);">
+                                            <span aria-hidden="true" class="eve-text">
+                                                <span class="">{{ event.description }} </span>
+                                            </span>
+                                            <span class="eve-details">
+                                                {{ event.batch_code }}, {{ event.description }} 
+                                            </span>
+                                        </div>
+                                    </div> 
+                                </ng-container>
+                                <!-- <div class="eve"
+                                    style="left: 14.29%; width: 14.29%; top: 1em; border-color: rgb(3, 155, 229);">
+                                    <div role="button" class="eve-btn" style="background-color: rgb(3, 155, 229);">
+                                        <span aria-hidden="true" class="eve-text">
+                                            <span class="">sjcnjncjns</span>
+                                        </span>
+                                        <span class="eve-details">All day, s, Murali tharan, No location, February 27 –
+                                            29,2024</span>
+                                    </div>
+                                </div> -->
+                            </div>
                         </ng-container>
                     </div>
                     <!-- <div role="gridcell" class="event-gridcell">
@@ -67,6 +95,7 @@
                             </div>
                         </div>
                     </div> -->
+
                 </div>
             </div>
         </div>

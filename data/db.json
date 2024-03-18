@@ -66,8 +66,8 @@
       {
         "id": 8,
         "batch_code": "b006",
-        "start_date": "Wed Feb 06 2024 00:00:00 GMT+0530 (India Standard Time)",
-        "end_date": "Wed Feb 10 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "start_date": "Thu Feb 06 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "end_date": "Sat Mar 10 2024 00:00:00 GMT+0530 (India Standard Time)",
         "description": "event - 3",
         "background_color": "#00ff00",
         "location": "Legend Inn"
@@ -75,8 +75,8 @@
       {
         "id": 9,
         "batch_code": "b006",
-        "start_date": "Wed Feb 05 2024 00:00:00 GMT+0530 (India Standard Time)",
-        "end_date": "Wed Feb 06 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "start_date": "Mon Mar 05 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "end_date": "Mon Mar 06 2024 00:00:00 GMT+0530 (India Standard Time)",
         "description": "event new",
         "background_color": "#00ff00",
         "location": "Legend Inn"
