@@ -1,0 +1,75 @@
+<header>
+    <div class="month">{{ monthYearTitle }}</div>
+    <div class="btns">
+        <div class="btn today" (click)="currentMonthBtn()">
+            Today
+        </div>
+        <div class="btn prev" title="Previous month" (click)="previousMonthBtn()">
+            <span>&lt;</span>
+        </div>
+        <div class="btn next" title="Next month" (click)="nextMonthBtn()">
+            <span>&gt;</span>
+        </div>
+    </div>
+</header>
+
+<div class="calendar-container">
+    <div role="row" class="days">
+        <div role="columnheader" class="day" *ngFor="let day of days">
+            <span class="day-title">{{ day }}</span>
+            <span class="day--title">{{ day | slice:0:3 }}</span>
+        </div>
+    </div>
+
+    <div class="presentation">
+        <div class="row" *ngFor="let rowCount of rowDivider(); let rowIndex = index">
+            <div class="empty-row">
+                <div class="empty-area" *ngFor="let columnCount of columnDivider()"></div>
+            </div>
+            <div class="date-row">
+                <div class="date-area" *ngFor="let columnCount of columnDivider(); let colIndex = index">
+                    <span class="date-d"
+                        [class.current-month-dates]="monthDates[rowIndex * columnDivider().length + colIndex].isCurrentMonthDay">
+                        {{ monthDates[rowIndex * columnDivider().length + colIndex].date | date:'d' }}
+                    </span>
+                </div>
+            </div>
+            <div class="event-row">
+                <div class="event--row" style="height: 3.75em;">
+                    <div role="gridcell" class="event-gridcell" *ngFor="let columnCount of columnDivider(); let colIndex = index">
+                        <ng-container *ngIf="getEventsByDay(monthDates[rowIndex * columnDivider().length + colIndex]).length > 0">
+                            <h2 class="event-title">{{ monthDates[rowIndex * columnDivider().length + colIndex].date }}</h2>
+                        </ng-container>
+                    </div>
+                    <!-- <div role="gridcell" class="event-gridcell">
+                        <h2 class="event-title">2 events, Monday, February 26</h2>
+                        <div class="event-list">
+                            <div class="eve"
+                                style="left: 14.29%; width: 14.29%; top: 0em; border-color: rgb(3, 155, 229);">
+                                <div role="button" class="eve-btn" style="background-color: rgb(3, 155, 229);">
+                                    <span aria-hidden="true" class="eve-text">
+                                        <span class="">sjcnjncjns</span>
+                                    </span>
+                                    <span class="eve-details">All day, s, Murali tharan, No location, February 27 –
+                                        29,2024</span>
+                                </div>
+                            </div>
+
+                            <div class="eve"
+                                style="left: 14.29%; width: 14.29%; top: 1em; border-color: rgb(3, 155, 229);">
+                                <div role="button" class="eve-btn" style="background-color: rgb(3, 155, 229);">
+                                    <span aria-hidden="true" class="eve-text">
+                                        <span class="">sjcnjncjns</span>
+                                    </span>
+                                    <span class="eve-details">All day, s, Murali tharan, No location, February 27 –
+                                        29,2024</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,1 +1,105 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
+:root {
+    /* color-scheme: light;
+    --primary: rgb(26, 115, 232);
+    --primary-container: rgb(66, 133, 244);
+    --on-primary: #fff;
+    --secondary: rgb(232, 240, 254);
+    --secondary-container: rgb(210, 227, 252);
+    --on-secondary: rgb(25, 103, 210);
+    --on-secondary-container: rgb(24, 90, 188);
+    --surface: #fff;
+    --surface-transparent: rgba(255, 255, 255, 0);
+    --surface-container: #fff;
+    --surface-container-high: #fff;
+    --surface-container-low: #fff;
+    --on-surface: rgb(60, 64, 67);
+    --on-surface-variant: rgb(95, 99, 104);
+    --on-surface-variant-agm: #70757a;
+    --background: #fff;
+    --on-background: rgb(32, 33, 36);
+    --textfield-surface: rgb(241, 243, 244);
+    --textfield-primary: rgb(25, 103, 210);
+    --textfield-hairline: rgb(128, 134, 139);
+    --textfield-error: rgb(197, 34, 31);
+    --error: rgb(217, 48, 37);
+    --on-error: #fff;
+    --shadow-1: 0px 1px 2px 0px rgba(60, 64, 67, 0.3),
+      0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+    --shadow-5: 0px 4px 4px 0px rgba(60, 64, 67, 0.3),
+      0px 8px 12px 6px rgba(60, 64, 67, 0.15);
+    --fab: rgba(255, 255, 255, 0.502);
+    --fab-hover: #f6fafe;
+    --dimmed: rgba(32, 33, 36, 0.38);
+    --chip-hover: rgb(241, 243, 244);
+    --now: rgb(234, 67, 53);
+    --local-override-container: rgb(254, 247, 224);
+    --local-override-focus-active-indicator: rgb(242, 153, 0); */
+    /* own */
+
+    --outline-variant: rgb(218, 220, 224);
+
+    --bg-light: #ffffff;
+    --bg-primary: #4285f4;
+    --bg-secondary: #ebecec;
+    --hairline: #dadce0;
+  
+    --text-clr-200: #70757a;
+    --text-clr-500: #202224;
+    --text-clr-700: #5f6368;
+    --text-light: #ffffff;
+  
+    --text-clr-weekdays: var(--text-clr-200);
+    --text-clr-primary: var(--text-clr-500);
+  
+    --fw-light-300: 300;
+    --fw-regular-400: 400;
+    --fw-medium-500: 500;
+  
+    --fw-navbar: var(--fw-regular-400);
+    --fw-calendar-view: var(--fw-medium-500);
+  
+    --fs-smaller: 0.688rem;
+    --fs-normal: 0.75rem;
+    --fs-large: 1.375rem;
+  
+    --fs-navbar: var(--fs-large);
+    --fs-weekdays: var(--fs-smaller);
+    --fs-days: var(--fs-normal);
+    --fs-event: var(--fs-normal);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  body {
+    margin: 0.5rem;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+    /* overflow: hidden; */
+    height: 100%;
+    background-color: var(--bg-light);
+    min-width: 450px;
+  }
+
+  [role="columnheader"],
+  [role="rowheader"],
+  [role="gridcell"] {
+    outline: none;
+  }
+
+  ::-webkit-scrollbar {
+    background: transparent;
+    height: 8px;
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar {
+    background: transparent;
+    height: 8px;
+    width: 8px;
+  }

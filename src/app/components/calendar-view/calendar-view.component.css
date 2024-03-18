@@ -1,0 +1,291 @@
+/* calendar navbar */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  font-weight: var(--fw-navbar);
+  font-size: var(--fs-navbar);
+  color: var(--text-clr-primary);
+}
+
+header .month {
+  margin-inline-start: 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+header .btns {
+  display: flex;
+  margin-inline: 3rem;
+  gap: 2rem;
+}
+
+header .btns .btn {
+  cursor: pointer;
+}
+
+header .btns .btn.today {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--text-clr-200);
+  font-weight: var(--fw-medium-500);
+  font-size: var(--fs-normal);
+}
+
+header .btns .btn > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+header .btns .btn > span:hover,
+header .btns .btn.today:hover {
+  background-color: var(--bg-secondary);
+}
+
+/* calendar view days */
+.calendar-grid {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+}
+
+.days {
+  margin: 0;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  display: flex;
+  -webkit-box-flex: 0;
+  flex: none;
+  height: 20px;
+  border-top: var(--outline-variant) 1px solid;
+}
+
+.days:first-child {
+  border-left: var(--outline-variant) 1px solid;
+}
+
+.day {
+  border-right: var(--outline-variant) 1px solid;
+  border-right: var(--outline-variant) 1px solid;
+  -webkit-box-flex: 1;
+  flex: 1 1 0%;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.day::before {
+  display: inline-block;
+  content: "";
+  height: 100%;
+}
+
+.day-title {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  -webkit-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.day--title {
+  color: var(--text-clr-weekdays);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+/* month view */
+.presentation {
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-flex: 1;
+  flex: 1 1 0%;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  height: 83.25svh;
+}
+
+.row {
+  position: relative;
+  overflow: hidden;
+  border-bottom: var(--outline-variant) 1px solid;
+  display: flex;
+  -webkit-box-flex: 1;
+  flex: 1 1 0%;
+}
+
+.empty-row,
+.date-row {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* empty layout */
+.empty-row > *:first-child {
+  border-left: 1px solid var(--outline-variant);
+}
+
+.empty-row > *:last-child {
+  border-right: 1px solid var(--outline-variant);
+}
+
+.empty-area {
+  border-right: var(--outline-variant) 1px solid;
+  -webkit-box-flex: 1;
+  flex: 1 1 0%;
+}
+
+/* date row */
+.date-row {
+  pointer-events: none;
+  z-index: 3;
+}
+
+.date-area {
+  font-size: 14px;
+  line-height: 30px;
+  color: var(--text-clr-weekdays);
+  text-align: center;
+  background: transparent;
+  -webkit-box-flex: 1;
+  flex: 1 1 0%;
+}
+
+.date-d {
+  display: inline-block; 
+  text-align: center;
+  line-height: 16px;
+  pointer-events: auto;
+  font-size: var(--fs-normal);
+  font-weight: var(--fw-regular-400);
+  transition: all 0.3s;
+  height: 25px;
+  width: 25px;
+  padding: 5px;
+  border-radius: 50%;
+  margin-top: 1px;
+  color: var(--text-clr-weekdays);
+}
+
+.date-d:hover {
+  background-color: var(--bg-secondary);
+  transform: translateY(-1px);
+}
+
+.date-d.active {
+  background-color: var(--bg-primary);
+  color: var(--text-light);
+}
+
+.current-month-dates {
+  color: var(--text-clr-primary) !important;
+}
+
+/* Event row  */
+.event-row {
+  margin-top: 25px;
+  -webkit-box-flex: 1;
+  flex: 1 1 0%;
+}
+.event--row {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.event-gridcell {
+  -webkit-box-flex: 1;
+  flex: 1 1 0%;
+  border-right: 1px solid transparent;
+  height: 60px;
+}
+
+.event-title {
+  margin: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  user-select: none;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.eve {
+  font-size: 20px;
+  height: 20px;
+
+  position: absolute;
+  box-sizing: border-box;
+  padding-right: 8px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    -webkit-transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  z-index: 5;
+}
+
+.eve-btn {
+  padding: 0 4px;
+  height: 18px;
+  line-height: 16px;
+
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 4px;
+  box-sizing: border-box;
+  pointer-events: auto;
+  overflow: hidden;
+  display: flex;
+  outline: none;
+  -webkit-align-items: center;
+  align-items: center;
+  transition: background-color 0.1s linear;
+}
+
+.eve-text {
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  line-height: 16px;
+}
+
+.eve-text > span {
+  overflow: hidden;
+  -webkit-box-flex: 0;
+  flex: 0 1 auto;
+  white-space: nowrap;
+}
+
+.eve-details {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  user-select: none;
+  white-space: nowrap;
+  width: 1px;
+}
