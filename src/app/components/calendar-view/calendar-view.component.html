@@ -28,24 +28,54 @@
             </div>
             <div class="date-row">
                 <div class="date-area" *ngFor="let columnCount of columnDivider(); let colIndex = index">
-                    <span class="date-d"
-                        [class.current-month-dates]="monthDates[rowIndex * columnDivider().length + colIndex].isCurrentMonthDay">
-                        {{ monthDates[rowIndex * columnDivider().length + colIndex].date | date:'d' }}
+                    <span class="date-d" [attr.data-datekey]="getDateTime(getMonthDate(rowIndex, colIndex))"
+                        [class.current-month-dates]="getMonthDate(rowIndex, colIndex).isCurrentMonthDay">
+                        {{ getMonthDate(rowIndex, colIndex).date | date: 'd'}}
                     </span>
                 </div>
             </div>
             <div class="event-row">
                 <div class="event--row" style="height: 3.75em;">
 
-                    <div role="gridcell" class="event-gridcell"
-                        *ngFor="let columnCount of columnDivider(); let colIndex = index">
-                        <h2 class="event-title">{{ getEventsByDay(monthDates[rowIndex * columnDivider().length + colIndex]).length }} Events, {{ monthDates[rowIndex * columnDivider().length + colIndex].date }}</h2>
-                        <ng-container
-                            *ngIf="getEventsByDay(monthDates[rowIndex * columnDivider().length + colIndex]).length > 0">
+                    <div role="gridcell" class="event-gridcell" 
+                    [attr.data-datekey]="getDateTime(getMonthDate(rowIndex, colIndex))"
+                    *ngFor="let columnCount of columnDivider(); let colIndex = index"
+                    >
+                    <h2 class="event-title">{{ getEventsByDay(getMonthDate(rowIndex, colIndex)).length }} Events, {{ getMonthDate(rowIndex, colIndex).date }}</h2>
+                        <ng-container *ngIf="getEventsByDay(getMonthDate(rowIndex, colIndex)).length > 0">
                             <div class="event-list">
-                                <ng-container *ngFor="let event of getEventsByDay(monthDates[rowIndex * columnDivider().length + colIndex]);">
+                                <ng-container *ngFor="let event of getEventsByDay(getMonthDate(rowIndex, colIndex))">
+                                    <div class="eve" [ngStyle]="event.styles">
+                                        <div role="button" class="eve-btn" [style.backgroundColor]="event.background_color">
+                                            <span aria-hidden="true" class="eve-text">
+                                                <span class="">{{ event.description }}</span>
+                                            </span>
+                                            <span class="eve-details">
+                                                {{ event.batch_code }}, {{ event.description }} 
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ng-container>   
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div role="gridcell" class="event-gridcell"
+                        [attr.data-datekey]="getDateTime(getMonthDate(rowIndex, colIndex))"
+                        *ngFor="let columnCount of columnDivider(); let colIndex = index">
+                        <h2 class="event-title">{{ getEventsByDay(getMonthDate(rowIndex, colIndex)).length }} Events, {{ getMonthDate(rowIndex, colIndex).date }}</h2>
+                        <ng-container
+                            *ngIf="getEventsByDay(getMonthDate(rowIndex, colIndex)).length > 0">
+                            <div class="event-list">
+                                <ng-container *ngFor="let event of getMonthDate(rowIndex, colIndex)">
                                     <div class="eve"
-                                        [style]="eventStyle(colIndex, getEventsByDay(monthDates[rowIndex * columnDivider().length + colIndex]).length ,event)">
+                                        [ngStyle]="">
                                         <div role="button" class="eve-btn" [style.backgroundColor]="event.background_color">
                                             <span aria-hidden="true" class="eve-text">
                                                 <span class="">{{ event.description }} </span>
@@ -58,8 +88,9 @@
                                 </ng-container>
                             </div>
                         </ng-container>
-                    </div>
-                    <!-- <div role="gridcell" class="event-gridcell">
+                    </div> -->
+
+<!-- <div role="gridcell" class="event-gridcell">
                         <h2 class="event-title">2 events, Monday, February 26</h2>
                         <div class="event-list">
                             <div class="eve"
@@ -72,23 +103,9 @@
                                         29,2024</span>
                                 </div>
                             </div>
-
-                            <div class="eve"
-                                style="left: 14.29%; width: 14.29%; top: 1em; border-color: rgb(3, 155, 229);">
-                                <div role="button" class="eve-btn" style="background-color: rgb(3, 155, 229);">
-                                    <span aria-hidden="true" class="eve-text">
-                                        <span class="">sjcnjncjns</span>
-                                    </span>
-                                    <span class="eve-details">All day, s, Murali tharan, No location, February 27 –
-                                        29,2024</span>
-                                </div>
-                            </div>
                         </div>
                     </div> -->
 
-                </div>
-            </div>
-        </div>
-    </div>
 
-</div>
+
+

@@ -1,0 +1,72 @@
+{
+        "id": 1,
+        "batch_code": "b001",
+        "start_date": "Tue Feb 13 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "end_date": "Thu Feb 15 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "description": "Hello world 1",
+        "background_color": "#00ff00",
+        "location": "Legend Inn"
+      },
+      {
+        "id": 2,
+        "batch_code": "b002",
+        "start_date": "Fri Feb 23 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "end_date": "Wed Feb 28 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "description": "Hello world 2",
+        "background_color": "#ff0000",
+        "location": "Melanka"
+      },
+      {
+        "id": 3,
+        "batch_code": "b003",
+        "start_date": "Tue Feb 06 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "end_date": "Sat Feb 10 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "description": "event - 1",
+        "background_color": "#ffff00",
+        "location": "Legend Inn"
+      },
+      {
+        "id": 4,
+        "batch_code": "b004",
+        "start_date": "Sat Mar 16 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "end_date": "Tue Mar 19 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "description": "event - mar event",
+        "background_color": "#ff0000",
+        "location": "Legend Inn"
+      },
+      {
+        "id": 5,
+        "batch_code": "b005",
+        "start_date": "Tue Feb 06 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "end_date": "Thu Feb 15 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "description": "event - 2",
+        "background_color": "#0000ff",
+        "location": "Legend Inn"
+      },
+      {
+        "id": 6,
+        "batch_code": "b006",
+        "start_date": "Wed Feb 07 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "end_date": "Wed Feb 07 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "description": "event - 3",
+        "background_color": "#00ff00",
+        "location": "Legend Inn"
+      },
+      {
+        "id": 7,
+        "batch_code": "b006",
+        "start_date": "Wed Feb 07 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "end_date": "Wed Feb 09 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "description": "event - 3",
+        "background_color": "#00ff00",
+        "location": "Legend Inn"
+      },
+      {
+        "id": 8,
+        "batch_code": "b006",
+        "start_date": "Thu Feb 06 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "end_date": "Sat Mar 10 2024 00:00:00 GMT+0530 (India Standard Time)",
+        "description": "event - 3",
+        "background_color": "#00ff00",
+        "location": "Legend Inn"
+      },
