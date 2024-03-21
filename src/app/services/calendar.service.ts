@@ -161,6 +161,7 @@ export class CalendarService {
       // return this.events = data
       console.log(this.events);
       this.breakEvents()
+      this.filterEvents()
     });
   }
 
@@ -216,9 +217,20 @@ export class CalendarService {
         styles: this.stylesOfEvent(start_date.getDay(), start_date, end_date)
       });
     }
+
+    
     this.formatedEvents = updatedEvents
+    
   }
 
+  filterEvents() {
+    this.formatedEvents = this.formatedEvents.filter(formatedEvent => {
+      const startDate = new Date(formatedEvent.start_date);
+      const endDate = new Date(formatedEvent.end_date);
+      return endDate >= startDate;
+    });
+  }
+  
   stylesOfEvent(startingDay: number, startDate:Date, endDate: Date) {
     let leftSpace = startingDay;
     let eventDateDifference = this.calculateDateDifference(startDate, endDate) + 1;
