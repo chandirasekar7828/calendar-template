@@ -8,7 +8,7 @@ import { event } from '../../models/event';
   templateUrl: './calendar-view.component.html',
   styleUrl: './calendar-view.component.css'
 })
-export class CalendarViewComponent {
+export class CalendarViewComponent implements OnInit{
   monthYearTitle: string = '';
   days: string[] = [];
   monthDates: monthDate[] = [];
@@ -29,9 +29,6 @@ export class CalendarViewComponent {
 
     // event calling
     this._calendar.fetchEvents();
-    // this.events = this._calendar.events;
-
-    // this.calculateEventsByDay();
   }
 
   // action btns
@@ -53,10 +50,8 @@ export class CalendarViewComponent {
   // events
   eventsByDay: any[] = [];
 
-  getEventsByDay(monthDate: monthDate){
-    // console.log(this._calendar.getEventsByDay(monthDate));
-    return this._calendar.getEventsByDay(monthDate); 
-    // this.events = this._calendar.getEventsByDay(monthDate); 
+  formatedFilteredEvents(monthDate: monthDate){
+    return this._calendar.formatedFilteredEvents(monthDate); 
   }
 
 // utils funtions
@@ -69,14 +64,19 @@ export class CalendarViewComponent {
   }
 
   getMonthDate(rowIndex: number, colIndex: number): any {
-    const index = rowIndex * this.columnDivider().length + colIndex;
-    return this.monthDates[index];
+    return this._calendar.getMonthDate(rowIndex, colIndex)
   }
 
   getDateTime(monthDate: monthDate): number {
-    return new Date(monthDate.date).getTime()
+    return this._calendar.getDateTime(monthDate)
   }
+
+  getWeekStartEndDates(monthDate: Date) {
+    return this._calendar.getWeekStartEndDates(monthDate)
+  }
+
+  getEventsByDay(monthDate: monthDate) {
+    return this._calendar.getEventsByDay(monthDate);
+  }
+
 }
-
-
-// left: 14.29%; width: 14.29%; top: 0em; border-color: rgb(3, 155, 229);

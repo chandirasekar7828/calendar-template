@@ -36,7 +36,7 @@ export class CalendarService {
     'Saturday',
   ];
 
-  private monthDatesSource = new BehaviorSubject<monthDate[]>([]);
+  public monthDatesSource = new BehaviorSubject<monthDate[]>([]);
   monthDates$: Observable<monthDate[]> = this.monthDatesSource.asObservable();
 
   date: Date = new Date();
@@ -78,8 +78,14 @@ export class CalendarService {
       this.currentYear
     }`;
     this.monthDatesSource.next(this.monthDates);
+    this.monthDates$.subscribe((monthDates) => {
+      // this.monthDates = monthDates;
+      monthDates.forEach((monthDate) => {
+        this.getWeekStartEndDates(monthDate.date);
+      });
+    });
+
     // console.log(this.monthDates);
-    
   }
 
   renderCalendarView(): void {
@@ -148,7 +154,7 @@ export class CalendarService {
   // events
   private API_URL = 'http://localhost:3000';
   events: event[] = [];
-  formatedEvents: any[] = []
+  formatedEvents: any[] = [];
 
   getEvents(): Observable<event[]> {
     return this.http.get<event[]>(`${this.API_URL}/batch`);
@@ -156,15 +162,14 @@ export class CalendarService {
 
   fetchEvents(): void {
     this.getEvents().subscribe((data: event[]) => {
-      // this.events = this.eventSort([...data]);
       this.events = [...data];
-      // return this.events = data
-      console.log(this.events);
-      this.breakEvents()
-      this.filterEvents()
+      this.breakEvents();
+      this.filterEvents();
+      this.monthDates.forEach((monthDate) =>
+        this.getWeekStartEndDates(monthDate.date)
+      );
     });
   }
-
 
   // utils functions
   createDateFromDMY(dateString: any): Date {
@@ -185,25 +190,38 @@ export class CalendarService {
     return new Array(7);
   }
 
+  getMonthDate(rowIndex: number, colIndex: number): any {
+    const index = rowIndex * this.columnDivider().length + colIndex;
+    return this.monthDates[index];
+  }
+
+  getDateTime(monthDate: monthDate): number {
+    return new Date(monthDate.date).getTime();
+  }
+
   breakEvents() {
     let updatedEvents = [];
+
     for (let event of this.events) {
       let start_date = new Date(event.start_date);
       let end_date = new Date(event.end_date);
       let current_date = new Date(start_date);
 
       while (current_date <= end_date) {
-        if (current_date.getDay() === 6) { 
+        if (current_date.getDay() === 6) {
           let new_end_date = new Date(current_date);
-          // new_end_date.setDate(current_date.getDate() - 1);
 
           updatedEvents.push({
             ...event,
             start_date: start_date,
             end_date: new_end_date,
-            styles: this.stylesOfEvent(start_date.getDay(), start_date, end_date)
+            styles: this.stylesOfEvent(
+              start_date.getDay(),
+              start_date,
+              end_date
+            ),
           });
-          
+
           start_date = new Date(current_date);
           start_date.setDate(current_date.getDate() + 1);
         }
@@ -214,30 +232,20 @@ export class CalendarService {
         ...event,
         start_date: start_date,
         end_date: end_date,
-        styles: this.stylesOfEvent(start_date.getDay(), start_date, end_date)
+        styles: this.stylesOfEvent(start_date.getDay(), start_date, end_date),
       });
     }
-
-    
-    this.formatedEvents = updatedEvents
-    
+    this.formatedEvents = updatedEvents;
   }
 
-  filterEvents() {
-    this.formatedEvents = this.formatedEvents.filter(formatedEvent => {
-      const startDate = new Date(formatedEvent.start_date);
-      const endDate = new Date(formatedEvent.end_date);
-      return endDate >= startDate;
-    });
-  }
-  
-  stylesOfEvent(startingDay: number, startDate:Date, endDate: Date) {
+  stylesOfEvent(startingDay: number, startDate: Date, endDate: Date) {
     let leftSpace = startingDay;
-    let eventDateDifference = this.calculateDateDifference(startDate, endDate) + 1;
+    let eventDateDifference =
+      this.calculateDateDifference(startDate, endDate) + 1;
 
-    let topSpace = 0
+    let topSpace = 0;
     return {
-      top:  `${topSpace}em`,
+      top: `${topSpace}em`,
       left: `${14.29 * leftSpace}%`,
       width: `${14.29 * eventDateDifference}%`,
     };
@@ -246,21 +254,30 @@ export class CalendarService {
   calculateDateDifference(startDateString: Date, endDateString: Date): number {
     const eventStartDate = new Date(startDateString);
     const eventEndDate = new Date(endDateString);
-    const differenceMs = Math.abs(eventEndDate.getTime() - eventStartDate.getTime());
+    const differenceMs = Math.abs(
+      eventEndDate.getTime() - eventStartDate.getTime()
+    );
     const differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
 
     return differenceDays;
   }
 
-  getEventsByDay(monthDate: monthDate): any[] {
+  filterEvents() {
+    this.formatedEvents = this.formatedEvents.filter((formatedEvent) => {
+      const startDate = new Date(formatedEvent.start_date);
+      const endDate = new Date(formatedEvent.end_date);
+      return endDate >= startDate;
+    });
+  }
+
+  formatedFilteredEvents(monthDate: monthDate): any[] {
     let day = new Date(monthDate.date);
     let formatedFilteredEvents: any[] = [];
     let hasEvents = false;
-    console.log(this.formatedEvents);
 
     this.formatedEvents.forEach((formatedEvent) => {
       let formatedEventStartDate = new Date(formatedEvent.start_date);
-      
+
       if (day.toDateString() === formatedEventStartDate.toDateString()) {
         formatedFilteredEvents.push(formatedEvent);
         hasEvents = true;
@@ -271,19 +288,110 @@ export class CalendarService {
     return formatedFilteredEvents;
   }
 
-  // eventSort(events: event[]) {
-  //   events.sort((a: any, b: any) => {
-  //     const startDateA = new Date(a.start_date);
-  //     const endDateA = new Date(a.end_date);
-  //     const startDateB = new Date(b.start_date);
-  //     const endDateB = new Date(b.end_date);
+  getWeekStartEndDates(date: Date) {
+    const currentDate = new Date(date);
 
-  //     const dateGapA = endDateA.getTime() - startDateA.getTime();
-  //     const dateGapB = endDateB.getTime() - startDateB.getTime();
+    const currentDayOfWeek = currentDate.getDay();
 
-  //     return dateGapB - dateGapA;
-  //   });
-  //   return events;
-  // }
- 
+    const differenceToSunday = currentDayOfWeek === 0 ? 0 : currentDayOfWeek;
+    const differenceToSaturday =
+      currentDayOfWeek === 0 ? 6 : 6 - currentDayOfWeek;
+
+    const weekStart = new Date(currentDate);
+    weekStart.setDate(currentDate.getDate() - differenceToSunday);
+
+    const weekEnd = new Date(currentDate);
+    weekEnd.setDate(currentDate.getDate() + differenceToSaturday);
+
+    this.getEventsFromWeek(weekStart, weekEnd);
+  }
+
+  getEventsFromWeek(weekStartDate: any, weekEndDate: any) {
+    let temp = 0;
+    const eventsFromWeek = this.formatedEvents.filter((formatedEvent) => {
+      const eventStartDate = new Date(formatedEvent.start_date);
+      const eventEndDate = new Date(formatedEvent.end_date);
+      return eventStartDate >= weekStartDate && eventEndDate <= weekEndDate;
+    });
+
+    this.eventSort(eventsFromWeek);
+
+    eventsFromWeek.forEach((eventFromWeek, index) => {
+      if (
+        index === 0 ||
+        new Date(eventFromWeek.start_date) >
+          new Date(eventsFromWeek[index - 1].end_date)
+      ) {
+        temp = 0;
+      } else {
+        let hasIntersect = false;
+        for (let i = 0; i < index; i++) {
+          const prevEvent = eventsFromWeek[i];
+          const eventStartDate = new Date(eventFromWeek.start_date);
+          const eventEndDate = new Date(eventFromWeek.end_date);
+          const prevEventStartDate = new Date(prevEvent.start_date);
+          const prevEventEndDate = new Date(prevEvent.end_date);
+
+          if (
+            eventStartDate <= prevEventEndDate &&
+            eventEndDate >= prevEventStartDate
+          ) {
+            hasIntersect = true;
+            break;
+          }
+        }
+        if (!hasIntersect) {
+          temp = 0;
+        } else {
+          temp++;
+        }
+      }
+
+      // if (temp > 1) {
+      //     eventFromWeek.description = `${temp} more`; // Update the event title to display "n more" if top > 1em
+      // }
+
+      eventFromWeek.styles.top = `${temp}em`;
+    });
+  }
+
+  eventSort(events: any[]) {
+    events.sort((a: any, b: any) => {
+      const startDateA = new Date(a.start_date);
+      const endDateA = new Date(a.end_date);
+      const startDateB = new Date(b.start_date);
+      const endDateB = new Date(b.end_date);
+
+      const dateGapA = endDateA.getTime() - startDateA.getTime();
+      const dateGapB = endDateB.getTime() - startDateB.getTime();
+
+      return dateGapA - dateGapB;
+    });
+    return events;
+  }
+
+  getEventsByDay(monthDate: monthDate) {
+    let day = monthDate.date;
+    let filteredEvents: event[] = [];
+    let hasEvents = false;
+
+    this.formatedEvents.forEach((event) => {
+      let eventStartDate = new Date(event.start_date);
+      let eventEndDate = new Date(event.end_date);
+
+      if (day.getTime() === eventStartDate.getTime()) {
+        filteredEvents.push(event);
+        hasEvents = true;
+      }
+
+      if (day >= eventStartDate && day <= eventEndDate) {
+        hasEvents = true;
+      }
+    });
+
+    monthDate.hasEvent = hasEvents;
+    // console.log(filteredEvents);
+
+    return filteredEvents;
+  }
 }

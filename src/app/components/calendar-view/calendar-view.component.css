@@ -169,7 +169,7 @@ header .btns .btn.today:hover {
 }
 
 .date-d {
-  display: inline-block; 
+  display: inline-block;
   text-align: center;
   line-height: 16px;
   pointer-events: auto;
@@ -290,3 +290,23 @@ header .btns .btn.today:hover {
   width: 1px;
 }
 
+.if-more-two-events {
+  /* text-wrap: nowrap;
+  height: 19px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  text-align: center;
+  border-radius: 4px;
+  margin-left: 1px ;
+  font-size: var(--fs-normal);
+  font-weight: var(--fw-medium-500);
+  background-color: var(--text-light);
+  color: var(--text-clr-200);
+  position: absolute;
+  top:3em; */
+}
+
+.if-more-two-events:hover {
+  background-color: var(--bg-secondary);
+}
