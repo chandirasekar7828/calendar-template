@@ -291,20 +291,23 @@ header .btns .btn.today:hover {
 }
 
 .if-more-two-events {
-  /* text-wrap: nowrap;
-  height: 19px;
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  text-align: center;
+  width: 14.29%;
+  /* margin-inline: 1px ; */
+  /* -webkit-box-flex: 1; */
+  /* flex: 1 1 0%; */
+  padding: 3px 0px;
+  background: transparent;    
+  margin-top: 2px ;
   border-radius: 4px;
-  margin-left: 1px ;
+  display: block;
+  position: absolute;
+  top:3em; 
+  text-wrap: nowrap;
+  text-align: center;
+  cursor: pointer;
   font-size: var(--fs-normal);
   font-weight: var(--fw-medium-500);
-  background-color: var(--text-light);
-  color: var(--text-clr-200);
-  position: absolute;
-  top:3em; */
+  color: var(--text-clr-primary);
 }
 
 .if-more-two-events:hover {

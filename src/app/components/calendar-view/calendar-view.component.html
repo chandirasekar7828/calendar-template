@@ -40,27 +40,30 @@
                     <div role="gridcell" class="event-gridcell"
                         [attr.data-datekey]="getDateTime(getMonthDate(rowIndex, colIndex))"
                         *ngFor="let columnCount of columnDivider(); let colIndex = index">
-                        <h2 class="event-title">{{ formatedFilteredEvents(getMonthDate(rowIndex, colIndex)).length }}
+
+                        <h2 class="event-title">{{ displayFormatedEvents(getMonthDate(rowIndex, colIndex)).length }}
                             Events, {{ getMonthDate(rowIndex, colIndex).date }}</h2>
-                        <ng-container *ngIf="formatedFilteredEvents(getMonthDate(rowIndex, colIndex)).length > 0">
+                        <ng-container *ngIf="displayFormatedEvents(getMonthDate(rowIndex, colIndex)).length > 0">
                             <div class="event-list">
                                 <ng-container
-                                    *ngFor="let event of formatedFilteredEvents(getMonthDate(rowIndex, colIndex));let i = index">
-                                    <div class="eve" [ngStyle]="event.styles">
-                                        <div role="button" class="eve-btn"
-                                            [style.backgroundColor]="event.background_color">
-                                            <span aria-hidden="true" class="eve-text">
-                                                <span class="">{{ event.description }}</span>
-                                            </span>
-                                            <span class="eve-details">
-                                                {{ event.batch_code }}, {{ event.description }}
-                                            </span>
+                                    *ngFor="let event of displayFormatedEvents(getMonthDate(rowIndex, colIndex));let i = index">
+                                    <ng-container *ngIf="event.styles.top < '2em'">
+                                        <div class="eve" [ngStyle]="event.styles">
+                                            <div role="button" class="eve-btn"
+                                                [style.backgroundColor]="event.background_color">
+                                                <span aria-hidden="true" class="eve-text">
+                                                    <span class="">{{ event.description }}</span>
+                                                </span>
+                                                <span class="eve-details">
+                                                    {{ event.batch_code }}, {{ event.description }}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </ng-container>
                                 </ng-container>
-                                <ng-container *ngIf="getEventsByDay(getMonthDate(rowIndex, colIndex)).length > 2">
-                                    <span class="has-event if-more-two-events">
-                                        {{ getEventsByDay(getMonthDate(rowIndex, colIndex)).length - 2 }} more
+                                <ng-container *ngIf="getEventsByDate(getMonthDate(rowIndex, colIndex)).length > 2">
+                                    <span class="if-more-two-events">
+                                        {{ getEventsByDate(getMonthDate(rowIndex, colIndex)).length - 2 }} more
                                     </span>
                                 </ng-container>
                             </div>

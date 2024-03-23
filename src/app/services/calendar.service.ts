@@ -154,6 +154,7 @@ export class CalendarService {
   // events
   private API_URL = 'http://localhost:3000';
   events: event[] = [];
+  eventsForNMoreBlock: event[] = []
   formatedEvents: any[] = [];
 
   getEvents(): Observable<event[]> {
@@ -163,40 +164,13 @@ export class CalendarService {
   fetchEvents(): void {
     this.getEvents().subscribe((data: event[]) => {
       this.events = [...data];
+      this.eventsForNMoreBlock = [...data]
       this.breakEvents();
-      this.filterEvents();
+      this.enhancedBreakEvents();
       this.monthDates.forEach((monthDate) =>
         this.getWeekStartEndDates(monthDate.date)
       );
     });
-  }
-
-  // utils functions
-  createDateFromDMY(dateString: any): Date {
-    let _parts = dateString.split('-');
-    let _year = _parts[0];
-    let _month = _parts[1];
-    let _day = _parts[2];
-    _day = _day.padStart(2, '0');
-    _month = _month.padStart(2, '0');
-    return new Date(_year, _month - 1, _day);
-  }
-
-  rowDivider() {
-    return new Array(this.monthDates.length / 7);
-  }
-
-  columnDivider() {
-    return new Array(7);
-  }
-
-  getMonthDate(rowIndex: number, colIndex: number): any {
-    const index = rowIndex * this.columnDivider().length + colIndex;
-    return this.monthDates[index];
-  }
-
-  getDateTime(monthDate: monthDate): number {
-    return new Date(monthDate.date).getTime();
   }
 
   breakEvents() {
@@ -215,7 +189,7 @@ export class CalendarService {
             ...event,
             start_date: start_date,
             end_date: new_end_date,
-            styles: this.stylesOfEvent(
+            styles: this.getStylesOfEvent(
               start_date.getDay(),
               start_date,
               end_date
@@ -232,16 +206,16 @@ export class CalendarService {
         ...event,
         start_date: start_date,
         end_date: end_date,
-        styles: this.stylesOfEvent(start_date.getDay(), start_date, end_date),
+        styles: this.getStylesOfEvent(start_date.getDay(), start_date, end_date),
       });
     }
     this.formatedEvents = updatedEvents;
   }
 
-  stylesOfEvent(startingDay: number, startDate: Date, endDate: Date) {
+  getStylesOfEvent(startingDay: number, startDate: Date, endDate: Date) {
     let leftSpace = startingDay;
     let eventDateDifference =
-      this.calculateDateDifference(startDate, endDate) + 1;
+      this.getEventDateDifference(startDate, endDate) + 1;
 
     let topSpace = 0;
     return {
@@ -251,7 +225,7 @@ export class CalendarService {
     };
   }
 
-  calculateDateDifference(startDateString: Date, endDateString: Date): number {
+  getEventDateDifference(startDateString: Date, endDateString: Date): number {
     const eventStartDate = new Date(startDateString);
     const eventEndDate = new Date(endDateString);
     const differenceMs = Math.abs(
@@ -262,7 +236,7 @@ export class CalendarService {
     return differenceDays;
   }
 
-  filterEvents() {
+  enhancedBreakEvents() {
     this.formatedEvents = this.formatedEvents.filter((formatedEvent) => {
       const startDate = new Date(formatedEvent.start_date);
       const endDate = new Date(formatedEvent.end_date);
@@ -270,22 +244,22 @@ export class CalendarService {
     });
   }
 
-  formatedFilteredEvents(monthDate: monthDate): any[] {
+  displayFormatedEvents(monthDate: monthDate): any[] {
     let day = new Date(monthDate.date);
-    let formatedFilteredEvents: any[] = [];
+    let displayFormatedEvents: any[] = [];
     let hasEvents = false;
 
     this.formatedEvents.forEach((formatedEvent) => {
       let formatedEventStartDate = new Date(formatedEvent.start_date);
 
       if (day.toDateString() === formatedEventStartDate.toDateString()) {
-        formatedFilteredEvents.push(formatedEvent);
+        displayFormatedEvents.push(formatedEvent);
         hasEvents = true;
       }
     });
 
     monthDate.hasEvent = hasEvents;
-    return formatedFilteredEvents;
+    return displayFormatedEvents;
   }
 
   getWeekStartEndDates(date: Date) {
@@ -347,10 +321,6 @@ export class CalendarService {
         }
       }
 
-      // if (temp > 1) {
-      //     eventFromWeek.description = `${temp} more`; // Update the event title to display "n more" if top > 1em
-      // }
-
       eventFromWeek.styles.top = `${temp}em`;
     });
   }
@@ -370,28 +340,56 @@ export class CalendarService {
     return events;
   }
 
-  getEventsByDay(monthDate: monthDate) {
+  getEventsByDate(monthDate: monthDate) {
     let day = monthDate.date;
-    let filteredEvents: event[] = [];
-    let hasEvents = false;
+    let filteredEventsByDate: event[] = [];
+    // let hasEvents = false;
 
-    this.formatedEvents.forEach((event) => {
+    this.eventsForNMoreBlock.forEach((event) => {
       let eventStartDate = new Date(event.start_date);
       let eventEndDate = new Date(event.end_date);
-
-      if (day.getTime() === eventStartDate.getTime()) {
-        filteredEvents.push(event);
-        hasEvents = true;
-      }
-
+      
       if (day >= eventStartDate && day <= eventEndDate) {
-        hasEvents = true;
+        filteredEventsByDate.push(event);
+        // hasEvents = true;
       }
     });
 
-    monthDate.hasEvent = hasEvents;
-    // console.log(filteredEvents);
+    // monthDate.hasEvent = hasEvents;
+    console.log("Date - " + monthDate.date.getDate() + " - ");
+    
+    console.log(filteredEventsByDate);
 
-    return filteredEvents;
+    return filteredEventsByDate;
   }
+
+
+
+    // utils functions
+    createDateFromDMY(dateString: any): Date {
+      let _parts = dateString.split('-');
+      let _year = _parts[0];
+      let _month = _parts[1];
+      let _day = _parts[2];
+      _day = _day.padStart(2, '0');
+      _month = _month.padStart(2, '0');
+      return new Date(_year, _month - 1, _day);
+    }
+  
+    rowDivider() {
+      return new Array(this.monthDates.length / 7);
+    }
+  
+    columnDivider() {
+      return new Array(7);
+    }
+  
+    getMonthDate(rowIndex: number, colIndex: number): any {
+      const index = rowIndex * this.columnDivider().length + colIndex;
+      return this.monthDates[index];
+    }
+  
+    getDateTime(monthDate: monthDate): number {
+      return new Date(monthDate.date).getTime();
+    }
 }

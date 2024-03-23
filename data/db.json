@@ -134,7 +134,8 @@
       "description": "Event - 15",
       "background_color": "#ff0000",
       "location": "Legend Inn"
-    },
+    }
+    ,
     {
       "id": 16,
       "batch_code": "b016",
@@ -144,5 +145,5 @@
       "background_color": "#616161",
       "location": "Legend Inn"
     }
-  ]
+  ] 
 }

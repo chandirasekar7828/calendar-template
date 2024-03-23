@@ -50,8 +50,8 @@ export class CalendarViewComponent implements OnInit{
   // events
   eventsByDay: any[] = [];
 
-  formatedFilteredEvents(monthDate: monthDate){
-    return this._calendar.formatedFilteredEvents(monthDate); 
+  displayFormatedEvents(monthDate: monthDate){
+    return this._calendar.displayFormatedEvents(monthDate); 
   }
 
 // utils funtions
@@ -75,8 +75,8 @@ export class CalendarViewComponent implements OnInit{
     return this._calendar.getWeekStartEndDates(monthDate)
   }
 
-  getEventsByDay(monthDate: monthDate) {
-    return this._calendar.getEventsByDay(monthDate);
+  getEventsByDate(monthDate: monthDate) {
+    return this._calendar.getEventsByDate(monthDate);
   }
 
 }
