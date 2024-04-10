@@ -1,0 +1,36 @@
+<div class="head">
+  <header>
+    <div class="month">{{ day | date : "MMMM d, y" }}</div>
+    <hr />
+    <div class="btn">
+      <div class="btns">
+        <div class="btn today" (click)="currentDateBtn()">Today</div>
+        <div class="btn prev" title="Previous day" (click)="previousDateBtn()">
+          <span>&lt;</span>
+        </div>
+        <div class="btn next" title="Next day" (click)="nextDateBtn()">
+          <span class="btnnext">&gt;</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="week">{{ day | slice : 0 : 3 | uppercase }}</div>
+  <div class="day">{{ day | date : "dd" }}</div>
+  <div [style.backgroundColor]="eventValue.background_color">
+    {{ eventValue }}
+  </div>
+</div>
+
+<div class="fullview">
+  <div class="time-parent">
+    <span *ngFor="let times of time" class="timeview">
+      {{ times }}
+    </span>
+  </div>
+  <div class="gridview-parent">
+    <span *ngFor="let grid of range(1, 24)">
+      <hr class="gridview" />
+    </span>
+  </div>
+</div>

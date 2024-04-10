@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { monthDate } from '../models/monthDate';
@@ -9,6 +8,7 @@ import { event } from '../models/event';
   providedIn: 'root',
 })
 export class CalendarService {
+  
   monthYearTitle: string = '';
   months: string[] = [
     'January',
@@ -70,6 +70,14 @@ export class CalendarService {
     }
     this.renderCalendar();
   }
+
+  currentDateBtn(): void {
+    this.currentDate = this.currentDate;
+  }
+
+  previousDateBtn(): void {}
+
+  nextDateBtn(): void {}
 
   // action support functions
   renderCalendar(): void {
@@ -154,7 +162,7 @@ export class CalendarService {
   // events
   private API_URL = 'http://localhost:3000';
   events: event[] = [];
-  eventsForNMoreBlock: event[] = []
+  eventsForNMoreBlock: event[] = [];
   formatedEvents: any[] = [];
 
   getEvents(): Observable<event[]> {
@@ -164,7 +172,7 @@ export class CalendarService {
   fetchEvents(): void {
     this.getEvents().subscribe((data: event[]) => {
       this.events = [...data];
-      this.eventsForNMoreBlock = [...data]
+      this.eventsForNMoreBlock = [...data];
       this.breakEvents();
       this.enhancedBreakEvents();
       this.monthDates.forEach((monthDate) =>
@@ -206,7 +214,11 @@ export class CalendarService {
         ...event,
         start_date: start_date,
         end_date: end_date,
-        styles: this.getStylesOfEvent(start_date.getDay(), start_date, end_date),
+        styles: this.getStylesOfEvent(
+          start_date.getDay(),
+          start_date,
+          end_date
+        ),
       });
     }
     this.formatedEvents = updatedEvents;
@@ -348,7 +360,7 @@ export class CalendarService {
     this.eventsForNMoreBlock.forEach((event) => {
       let eventStartDate = new Date(event.start_date);
       let eventEndDate = new Date(event.end_date);
-      
+
       if (day >= eventStartDate && day <= eventEndDate) {
         filteredEventsByDate.push(event);
         // hasEvents = true;
@@ -356,40 +368,39 @@ export class CalendarService {
     });
 
     // monthDate.hasEvent = hasEvents;
-    console.log("Date - " + monthDate.date.getDate() + " - ");
-    
+    console.log('Date - ' + monthDate.date.getDate() + ' - ');
+
     console.log(filteredEventsByDate);
 
     return filteredEventsByDate;
   }
 
+  // utils functions
+  createDateFromDMY(dateString: any): Date {
+    let _parts = dateString.split('-');
+    let _year = _parts[0];
+    let _month = _parts[1];
+    let _day = _parts[2];
+    _day = _day.padStart(2, '0');
+    _month = _month.padStart(2, '0');
+    return new Date(_year, _month - 1, _day);
+  }
 
+  rowDivider() {
+    return new Array(this.monthDates.length / 7);
+  }
 
-    // utils functions
-    createDateFromDMY(dateString: any): Date {
-      let _parts = dateString.split('-');
-      let _year = _parts[0];
-      let _month = _parts[1];
-      let _day = _parts[2];
-      _day = _day.padStart(2, '0');
-      _month = _month.padStart(2, '0');
-      return new Date(_year, _month - 1, _day);
-    }
-  
-    rowDivider() {
-      return new Array(this.monthDates.length / 7);
-    }
-  
-    columnDivider() {
-      return new Array(7);
-    }
-  
-    getMonthDate(rowIndex: number, colIndex: number): any {
-      const index = rowIndex * this.columnDivider().length + colIndex;
-      return this.monthDates[index];
-    }
-  
-    getDateTime(monthDate: monthDate): number {
-      return new Date(monthDate.date).getTime();
-    }
+  columnDivider() {
+    return new Array(7);
+  }
+
+  getMonthDate(rowIndex: number, colIndex: number): any {
+    const index = rowIndex * this.columnDivider().length + colIndex;
+    console.log(this.monthDates[index]);
+    return this.monthDates[index];
+  }
+
+  getDateTime(monthDate: monthDate): number {
+    return new Date(monthDate.date).getTime();
+  }
 }

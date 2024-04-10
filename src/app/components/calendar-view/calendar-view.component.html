@@ -1,76 +1,137 @@
-<header>
+<div *ngIf="showComponent">
+  <header>
     <div class="month">{{ monthYearTitle }}</div>
     <div class="btns">
-        <div class="btn today" (click)="currentMonthBtn()">
-            Today
-        </div>
-        <div class="btn prev" title="Previous month" (click)="previousMonthBtn()">
-            <span>&lt;</span>
-        </div>
-        <div class="btn next" title="Next month" (click)="nextMonthBtn()">
-            <span>&gt;</span>
-        </div>
+      <div class="btn today" (click)="currentMonthBtn()">Today</div>
+      <div class="btn prev" title="Previous month" (click)="previousMonthBtn()">
+        <span>&lt;</span>
+      </div>
+      <div class="btn next" title="Next month" (click)="nextMonthBtn()">
+        <span>&gt;</span>
+      </div>
     </div>
-</header>
+  </header>
 
-<div class="calendar-container">
+  <div class="calendar-container">
     <div role="row" class="days">
-        <div role="columnheader" class="day" *ngFor="let day of days">
-            <span class="day-title">{{ day }}</span>
-            <span class="day--title">{{ day | slice:0:3 }}</span>
-        </div>
+      <div role="columnheader" class="day" *ngFor="let day of days">
+        <span class="day-title">{{ day }}</span>
+        <span class="day--title">{{ day | slice : 0 : 3 }}</span>
+      </div>
     </div>
 
     <div class="presentation">
-        <div class="row" *ngFor="let rowCount of rowDivider(); let rowIndex = index">
-            <div class="empty-row">
-                <div class="empty-area" *ngFor="let columnCount of columnDivider()"></div>
-            </div>
-            <div class="date-row">
-                <div class="date-area" *ngFor="let columnCount of columnDivider(); let colIndex = index">
-                    <span class="date-d" [attr.data-datekey]="getDateTime(getMonthDate(rowIndex, colIndex))"
-                        [class.current-month-dates]="getMonthDate(rowIndex, colIndex).isCurrentMonthDay">
-                        {{ getMonthDate(rowIndex, colIndex).date | date: 'd'}}
-                    </span>
-                </div>
-            </div>
-            <div class="event-row">
-                <div class="event--row" style="height: 3.75em;">
-
-                    <div role="gridcell" class="event-gridcell"
-                        [attr.data-datekey]="getDateTime(getMonthDate(rowIndex, colIndex))"
-                        *ngFor="let columnCount of columnDivider(); let colIndex = index">
-
-                        <h2 class="event-title">{{ displayFormatedEvents(getMonthDate(rowIndex, colIndex)).length }}
-                            Events, {{ getMonthDate(rowIndex, colIndex).date }}</h2>
-                        <ng-container *ngIf="displayFormatedEvents(getMonthDate(rowIndex, colIndex)).length > 0">
-                            <div class="event-list">
-                                <ng-container
-                                    *ngFor="let event of displayFormatedEvents(getMonthDate(rowIndex, colIndex));let i = index">
-                                    <ng-container *ngIf="event.styles.top < '2em'">
-                                        <div class="eve" [ngStyle]="event.styles">
-                                            <div role="button" class="eve-btn"
-                                                [style.backgroundColor]="event.background_color">
-                                                <span aria-hidden="true" class="eve-text">
-                                                    <span class="">{{ event.description }}</span>
-                                                </span>
-                                                <span class="eve-details">
-                                                    {{ event.batch_code }}, {{ event.description }}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </ng-container>
-                                </ng-container>
-                                <ng-container *ngIf="getEventsByDate(getMonthDate(rowIndex, colIndex)).length > 2">
-                                    <span class="if-more-two-events">
-                                        {{ getEventsByDate(getMonthDate(rowIndex, colIndex)).length - 2 }} more
-                                    </span>
-                                </ng-container>
-                            </div>
-                        </ng-container>
-                    </div>
-                </div>
-            </div>
+      <div
+        class="row"
+        *ngFor="let rowCount of rowDivider(); let rowIndex = index"
+      >
+        <div class="empty-row">
+          <div
+            class="empty-area"
+            *ngFor="let columnCount of columnDivider()"
+          ></div>
         </div>
+        <div class="date-row">
+          <div
+            class="date-area"
+            *ngFor="let columnCount of columnDivider(); let colIndex = index"
+          >
+            <span
+              class="date-d"
+              [attr.data-datekey]="
+                getDateTime(getMonthDate(rowIndex, colIndex))
+              "
+              [class.current-month-dates]="
+                getMonthDate(rowIndex, colIndex).isCurrentMonthDay
+              "
+              (click)="
+                load(
+                  getMonthDate(rowIndex, colIndex).date,
+                  getEventsByDate(getMonthDate(rowIndex, colIndex))
+                )
+              "
+            >
+              {{ getMonthDate(rowIndex, colIndex).date | date : "d" }}
+            </span>
+          </div>
+        </div>
+        <div class="event-row">
+          <div class="event--row" style="height: 3.75em">
+            <div
+              role="gridcell"
+              class="event-gridcell"
+              [attr.data-datekey]="
+                getDateTime(getMonthDate(rowIndex, colIndex))
+              "
+              *ngFor="let columnCount of columnDivider(); let colIndex = index"
+            >
+              <h2 class="event-title">
+                {{
+                  displayFormatedEvents(getMonthDate(rowIndex, colIndex)).length
+                }}
+                Events, {{ getMonthDate(rowIndex, colIndex).date }}
+              </h2>
+              <ng-container
+                *ngIf="
+                  displayFormatedEvents(getMonthDate(rowIndex, colIndex))
+                    .length > 0
+                "
+              >
+                <div class="event-list">
+                  <ng-container
+                    *ngFor="
+                      let event of displayFormatedEvents(
+                        getMonthDate(rowIndex, colIndex)
+                      );
+                      let i = index
+                    "
+                  >
+                    <ng-container *ngIf="event.styles.top < '2em'">
+                      <div class="eve" [ngStyle]="event.styles">
+                        <div
+                          role="button"
+                          class="eve-btn"
+                          [style.backgroundColor]="event.background_color"
+                        >
+                          <span aria-hidden="true" class="eve-text">
+                            <span class="">{{ event.description }}</span>
+                          </span>
+                          <span class="eve-details">
+                            {{ event.batch_code }}, {{ event.description }}
+                          </span>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      getEventsByDate(getMonthDate(rowIndex, colIndex)).length >
+                      2
+                    "
+                  >
+                    <span class="if-more-two-events">
+                      {{
+                        getEventsByDate(getMonthDate(rowIndex, colIndex))
+                          .length - 2
+                      }}
+                      more
+                    </span>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
+
+<!-- <div *ngIf="selectedValue" class="selectedEvent">
+  <div (click)="close()" class="clear">&#x2716;</div>
+  <span class="value" *ngFor="let selectValue of selectedValue">{{
+    selectValue
+  }}</span>
+</div> -->
+
+<ng-container #dayViewComponentContainer></ng-container>

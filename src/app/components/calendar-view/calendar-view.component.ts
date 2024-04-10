@@ -1,20 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { CalendarService } from '../../services/calendar.service';
 import { monthDate } from '../../models/monthDate';
 import { event } from '../../models/event';
+import { DayViewComponent } from '../day-view/day-view.component';
 
 @Component({
   selector: 'app-calendar-view',
   templateUrl: './calendar-view.component.html',
-  styleUrl: './calendar-view.component.css'
+  styleUrl: './calendar-view.component.css',
 })
-export class CalendarViewComponent implements OnInit{
+export class CalendarViewComponent implements OnInit {
   monthYearTitle: string = '';
   days: string[] = [];
   monthDates: monthDate[] = [];
-  events: event[] = []
+  events: event[] = [];
+  showComponent: boolean = true;
+  selected!: Date;
 
-  constructor(private _calendar: CalendarService) {}
+  constructor(
+    private _calendar: CalendarService,
+    private componentFactorResolver: ComponentFactoryResolver
+  ) {}
 
   ngOnInit(): void {
     // month title calling
@@ -50,33 +62,45 @@ export class CalendarViewComponent implements OnInit{
   // events
   eventsByDay: any[] = [];
 
-  displayFormatedEvents(monthDate: monthDate){
-    return this._calendar.displayFormatedEvents(monthDate); 
+  displayFormatedEvents(monthDate: monthDate) {
+    return this._calendar.displayFormatedEvents(monthDate);
   }
 
-// utils funtions
+  // utils funtions
   rowDivider() {
-    return this._calendar.rowDivider()
+    return this._calendar.rowDivider();
   }
-  
+
   columnDivider() {
-    return this._calendar.columnDivider()
+    return this._calendar.columnDivider();
   }
 
   getMonthDate(rowIndex: number, colIndex: number): any {
-    return this._calendar.getMonthDate(rowIndex, colIndex)
+    return this._calendar.getMonthDate(rowIndex, colIndex);
   }
 
   getDateTime(monthDate: monthDate): number {
-    return this._calendar.getDateTime(monthDate)
+    return this._calendar.getDateTime(monthDate);
   }
 
   getWeekStartEndDates(monthDate: Date) {
-    return this._calendar.getWeekStartEndDates(monthDate)
+    return this._calendar.getWeekStartEndDates(monthDate);
   }
 
   getEventsByDate(monthDate: monthDate) {
     return this._calendar.getEventsByDate(monthDate);
   }
 
+  @ViewChild('dayViewComponentContainer', { read: ViewContainerRef })
+  dayViewComponentContainer!: ViewContainerRef;
+  load(clickDate: Date, event: any) {
+    this.showComponent = !this.showComponent;
+    this.dayViewComponentContainer.clear();
+    const componentFactory =
+      this.componentFactorResolver.resolveComponentFactory(DayViewComponent);
+    const dayViewComponentRef =
+      this.dayViewComponentContainer.createComponent(componentFactory);
+    dayViewComponentRef.instance.day = `${clickDate}`;
+    dayViewComponentRef.instance.eventValue = `${event}`;
+  }
 }
