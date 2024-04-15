@@ -8,7 +8,6 @@ import { event } from '../models/event';
   providedIn: 'root',
 })
 export class CalendarService {
-  
   monthYearTitle: string = '';
   months: string[] = [
     'January',
@@ -70,14 +69,6 @@ export class CalendarService {
     }
     this.renderCalendar();
   }
-
-  currentDateBtn(): void {
-    this.currentDate = this.currentDate;
-  }
-
-  previousDateBtn(): void {}
-
-  nextDateBtn(): void {}
 
   // action support functions
   renderCalendar(): void {
@@ -352,9 +343,11 @@ export class CalendarService {
     return events;
   }
 
+  filteredEventsByDate: event[] = [];
+
   getEventsByDate(monthDate: monthDate) {
     let day = monthDate.date;
-    let filteredEventsByDate: event[] = [];
+    this.filteredEventsByDate = [];
     // let hasEvents = false;
 
     this.eventsForNMoreBlock.forEach((event) => {
@@ -362,7 +355,7 @@ export class CalendarService {
       let eventEndDate = new Date(event.end_date);
 
       if (day >= eventStartDate && day <= eventEndDate) {
-        filteredEventsByDate.push(event);
+        this.filteredEventsByDate.push(event);
         // hasEvents = true;
       }
     });
@@ -370,9 +363,9 @@ export class CalendarService {
     // monthDate.hasEvent = hasEvents;
     console.log('Date - ' + monthDate.date.getDate() + ' - ');
 
-    console.log(filteredEventsByDate);
+    console.log(this.filteredEventsByDate);
 
-    return filteredEventsByDate;
+    return this.filteredEventsByDate;
   }
 
   // utils functions

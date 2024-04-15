@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CalendarService } from '../../services/calendar.service';
+import { event } from '../../models/event';
 
 @Component({
   selector: 'app-day-view',
@@ -10,17 +11,12 @@ export class DayViewComponent implements OnInit {
   @Input() day: string = '';
   @Input() eventValue: any = '';
 
-  ngOnInit(): void {}
+  filterEvent: event[] = [];
+  constructor(private _dayview: CalendarService) {}
 
-  constructor(private _dailyview: CalendarService) {}
-
-  currentDateBtn(): void {
-    this._dailyview.currentDateBtn();
+  ngOnInit(): void {
+    this.filterEvent = this._dayview.filteredEventsByDate;
   }
-
-  previousDateBtn(): void {}
-
-  nextDateBtn(): void {}
 
   time: any[] = [
     'GMT+00',

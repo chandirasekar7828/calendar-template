@@ -109,7 +109,15 @@
                       2
                     "
                   >
-                    <span class="if-more-two-events">
+                    <span
+                      class="if-more-two-events"
+                      (click)="
+                        load(
+                          getMonthDate(rowIndex, colIndex).date,
+                          getEventsByDate(getMonthDate(rowIndex, colIndex))
+                        )
+                      "
+                    >
                       {{
                         getEventsByDate(getMonthDate(rowIndex, colIndex))
                           .length - 2
@@ -126,12 +134,5 @@
     </div>
   </div>
 </div>
-
-<!-- <div *ngIf="selectedValue" class="selectedEvent">
-  <div (click)="close()" class="clear">&#x2716;</div>
-  <span class="value" *ngFor="let selectValue of selectedValue">{{
-    selectValue
-  }}</span>
-</div> -->
 
 <ng-container #dayViewComponentContainer></ng-container>

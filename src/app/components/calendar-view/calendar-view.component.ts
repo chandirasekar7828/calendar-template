@@ -21,7 +21,6 @@ export class CalendarViewComponent implements OnInit {
   monthDates: monthDate[] = [];
   events: event[] = [];
   showComponent: boolean = true;
-  selected!: Date;
 
   constructor(
     private _calendar: CalendarService,
