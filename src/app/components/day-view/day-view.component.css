@@ -35,10 +35,24 @@ header .month {
   font-weight: 400;
 }
 .eventsindayview {
-  font-size: 15px;
+  padding: 0 4px;
+  height: 18px;
+  line-height: 16px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 4px;
+  box-sizing: border-box;
+  pointer-events: auto;
+  overflow: hidden;
+  display: flex;
+  outline: none;
+  -webkit-align-items: center;
+  align-items: center;
+  transition: background-color 0.1s linear;
   width: 85vw;
   color: white;
   margin: 5px 40px 5px 40px;
-  padding: 3px 0 3px 10px;
-  border-radius: 10px;
 }

@@ -323,7 +323,6 @@ export class CalendarService {
           temp++;
         }
       }
-
       eventFromWeek.styles.top = `${temp}em`;
     });
   }
@@ -334,7 +333,6 @@ export class CalendarService {
       const endDateA = new Date(a.end_date);
       const startDateB = new Date(b.start_date);
       const endDateB = new Date(b.end_date);
-
       const dateGapA = endDateA.getTime() - startDateA.getTime();
       const dateGapB = endDateB.getTime() - startDateB.getTime();
 

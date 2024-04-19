@@ -248,10 +248,8 @@ header .btns .btn.today:hover {
   padding: 0 4px;
   height: 18px;
   line-height: 16px;
-
   cursor: pointer;
   border: 1px solid transparent;
-
   color: #fff;
   font-size: 12px;
   font-weight: 700;
