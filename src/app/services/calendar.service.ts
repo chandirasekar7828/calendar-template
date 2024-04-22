@@ -336,6 +336,9 @@ export class CalendarService {
       const dateGapA = endDateA.getTime() - startDateA.getTime();
       const dateGapB = endDateB.getTime() - startDateB.getTime();
 
+      if (startDateA < startDateB) return -1;
+      if (startDateA > startDateB) return 1;
+
       return dateGapA - dateGapB;
     });
     return events;
